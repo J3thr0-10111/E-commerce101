@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUEGO | Premium Streetwear</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/5968/5968961.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="topbar">
+    <h1 id="nav-logo" class="logo">🔥 FUEGO</h1>
+    <nav id="menu" class="nav-list">
+        <button class="nav-btn" data-view="landing">HOME</button>
+        <button id="nav-shop" class="nav-btn" data-view="shop" style="display:none">SHOP</button>
+        <button id="nav-orders" class="nav-btn" data-view="user-orders" style="display:none">ORDERS</button>
+        <button id="nav-cart" class="nav-btn" data-view="cart-view" style="display:none">BAG</button>
+        <button id="nav-admin" class="nav-btn" data-view="admin" style="display:none">ADMIN</button>
+        <button id="nav-login" class="nav-btn" data-view="login">LOGIN</button>
+        <button id="nav-logout" class="nav-btn" style="display:none">LOGOUT</button>
+    </nav>
+</header>
+
+<main class="container">
+    <section id="landing" class="view">
+        <div class="hero">
+            <h2 class="hero-text">STREETWEAR<br>ON FIRE</h2>
+            <button class="btn-primary" data-view="shop">SHOP COLLECTION</button>
+        </div>
+    </section>
+
+    <section id="shop" class="view" style="display:none">
+        <div id="shopProducts" class="product-grid"></div>
+    </section>
+
+    <section id="user-orders" class="view" style="display:none">
+        <h2 class="section-title">Order History</h2>
+        <div id="userOrdersList" class="order-container"></div>
+    </section>
+
+    <section id="cart-view" class="view" style="display:none">
+        <div class="cart-card">
+            <h2>Your Bag</h2>
+            <div id="cartItems"></div>
+            <div class="banking-details">
+                <p><strong>BANKING DETAILS:</strong></p>
+                <p>Bank: FUEGO CENTRAL</p>
+                <p>Acc: 1029384756</p>
+                <p>Ref: Your Registered Email</p>
+            </div>
+            <h3 id="cartTotal">Total: $0</h3>
+            <button class="btn-primary" id="checkoutBtn">WHATSAPP CHECKOUT</button>
+        </div>
+    </section>
+
+    <section id="admin" class="view" style="display:none">
+        <div class="admin-panel">
+            <h3>Inventory Control</h3>
+            <div class="admin-form">
+                <input id="p-id" type="hidden">
+                <input id="p-name" placeholder="Item Name">
+                <input id="p-price" type="number" placeholder="Price">
+                <div class="sale-config">
+                    <select id="p-on-sale">
+                        <option value="false">Regular Price</option>
+                        <option value="true">Sale Item</option>
+                    </select>
+                    <input id="p-sale-pct" type="number" placeholder="Sale %">
+                </div>
+                <input type="file" id="p-file" accept="image/*">
+                <button class="btn-primary" id="saveProductBtn">SAVE PRODUCT</button>
+            </div>
+            <div id="adminProductList"></div>
+        </div>
+    </section>
+
+    <section id="login" class="view" style="display:none">
+        <div class="auth-card">
+            <h2 id="authTitle">Login</h2>
+            <div class="auth-group">
+                <input id="email" type="email" placeholder="Email">
+                <input id="pass" type="password" placeholder="Password">
+            </div>
+            <button class="btn-primary" id="authBtn">SUBMIT</button>
+            <p id="toggleAuth" class="toggle-link">Create Account</p>
+        </div>
+    </section>
+</main>
+
+<script src="app.js" type="module"></script>
+</body>
+</html>
