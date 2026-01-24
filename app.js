@@ -108,7 +108,7 @@ function renderShop() {
             <img src="${p.image || 'https://via.placeholder.com/300'}">
             <div class="card-info">
                 <h4>${p.name}</h4>
-                <p>$${p.price}</p>
+                <p>R${p.price}</p>
                 <button class="btn-primary" onclick="addToCart('${p.id}')">Add to Bag</button>
             </div>
         </div>
@@ -125,7 +125,7 @@ window.addToCart = (id) => {
 function renderCart() {
     document.getElementById('cartItems').innerHTML = cart.map((item, i) => `
         <div class="admin-item">
-            <span>${item.name} - $${item.price}</span>
+            <span>${item.name} - R ${item.price}</span>
             <button onclick="removeFromCart(${i})">Remove</button>
         </div>
     `).join('');
