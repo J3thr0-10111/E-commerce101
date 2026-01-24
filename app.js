@@ -130,7 +130,7 @@ function renderCart() {
         </div>
     `).join('');
     const total = cart.reduce((s,i) => s + i.price, 0);
-    document.getElementById('cartTotal').innerText = `Total: $${total}`;
+    document.getElementById('cartTotal').innerText = `Total: R${total}`;
 }
 
 window.removeFromCart = (i) => {
@@ -143,7 +143,7 @@ document.getElementById('checkoutBtn').onclick = async () => {
     const total = cart.reduce((s,i) => s + i.price, 0);
     const orderData = { userId: auth.currentUser.uid, items: cart, total, timestamp: Date.now() };
     await addDoc(collection(db, "orders"), orderData);
-    window.open(`https://wa.me/27638518362?text=New Order: $${total}`);
+    window.open(`https://wa.me/27638518362?text=Order Total: R ${total} add description`);
     cart = [];
     showView('landing');
 };
