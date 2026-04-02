@@ -3,92 +3,1020 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FUEGO | Premium Streetwear</title>
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/5968/5968961.png">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>FEUGO | Premium Streetwear</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fire: #ff3c00;
+            --ember: #ff7a00;
+            --gold: #ffb800;
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --surface2: #181818;
+            --border: #252525;
+            --text: #f5f5f5;
+            --muted: #888;
+            --wa: #25D366;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Barlow', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ─── NOISE OVERLAY ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* ─── TOPBAR ─── */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            height: 64px;
+            background: rgba(10,10,10,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--fire), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            user-select: none;
+            transition: opacity 0.2s;
+        }
+        .logo:hover { opacity: 0.85; }
+        .logo span { font-size: 1.5rem; -webkit-text-fill-color: initial; }
+
+        .nav-list {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.12em;
+            padding: 8px 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            border-radius: 4px;
+            transition: color 0.2s, background 0.2s;
+        }
+        .nav-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+        .nav-btn.active { color: var(--fire); }
+
+        /* Cart badge */
+        #nav-cart { position: relative; }
+        #cart-count {
+            position: absolute;
+            top: 2px; right: 4px;
+            background: var(--fire);
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 900;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* ─── VIEWS ─── */
+        .view { display: none; }
+        .view.active { display: block; }
+
+        /* ─── HERO ─── */
+        #landing {
+            position: relative;
+            min-height: calc(100vh - 64px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 60% 60% at 50% 100%, rgba(255,60,0,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 30%, rgba(255,122,0,0.08) 0%, transparent 60%),
+                var(--bg);
+            z-index: 0;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,60,0,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,60,0,0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            mask-image: radial-gradient(ellipse at center bottom, black 0%, transparent 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.35em;
+            color: var(--fire);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(5rem, 18vw, 14rem);
+            line-height: 0.88;
+            letter-spacing: -0.01em;
+            color: var(--text);
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: fadeUp 0.9s ease forwards 0.4s;
+        }
+
+        .hero-title .fire-word {
+            background: linear-gradient(135deg, var(--fire) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: fadeUp 0.9s ease forwards 0.6s;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.9s ease forwards 0.8s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--fire), var(--ember));
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 24px rgba(255,60,0,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(255,60,0,0.45);
+        }
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 15px 40px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s, background 0.2s;
+        }
+        .btn-outline:hover {
+            border-color: var(--fire);
+            color: var(--fire);
+            background: rgba(255,60,0,0.05);
+        }
+
+        /* Scroll indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.4s;
+        }
+        .scroll-hint span {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--fire), transparent);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        /* ─── SHOP ─── */
+        #shop { padding: 48px 5% 80px; }
+
+        .shop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            letter-spacing: 0.05em;
+            line-height: 1;
+        }
+
+        .product-count {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.85rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 2px;
+        }
+
+        .card {
+            background: var(--surface);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            group: true;
+        }
+
+        .card-img-wrap {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            background: var(--surface2);
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: block;
+        }
+
+        .card:hover img { transform: scale(1.05); }
+
+        .sale-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: var(--fire);
+            color: #fff;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            padding: 5px 10px;
+            border-radius: 2px;
+            z-index: 2;
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .card:hover .card-overlay { opacity: 1; }
+
+        .card-add-btn {
+            background: white;
+            color: #000;
+            border: none;
+            padding: 14px 32px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            transform: translateY(10px);
+            transition: transform 0.3s ease, background 0.2s;
+        }
+        .card:hover .card-add-btn { transform: translateY(0); }
+        .card-add-btn:hover { background: var(--fire); color: #fff; }
+
+        .card-info {
+            padding: 16px 20px 20px;
+        }
+
+        .card-name {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .card-price-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-price {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--fire);
+        }
+
+        .card-price-orig {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-decoration: line-through;
+        }
+
+        /* ─── CART ─── */
+        #cart-view { padding: 48px 5%; }
+
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 32px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .cart-layout { grid-template-columns: 1fr; }
+        }
+
+        .cart-items-section h2,
+        .cart-summary h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 2px;
+            background: var(--surface2);
+        }
+
+        .cart-item-info { flex: 1; }
+        .cart-item-name {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .cart-item-price { color: var(--fire); font-weight: 600; }
+
+        .cart-remove {
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.75rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            letter-spacing: 0.1em;
+            padding: 6px 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .cart-remove:hover { border-color: var(--fire); color: var(--fire); }
+
+        .cart-summary {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 32px;
+            height: fit-content;
+            position: sticky;
+            top: 96px;
+        }
+
+        .banking-box {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .banking-box h4 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--fire);
+            margin-bottom: 12px;
+        }
+
+        .banking-box p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+        .banking-box p strong { color: var(--text); }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .cart-total-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .cart-total-amount {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.05em;
+            color: var(--fire);
+        }
+
+        .empty-cart {
+            padding: 80px 0;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .empty-cart .empty-icon { font-size: 3rem; margin-bottom: 16px; }
+        .empty-cart p { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; margin-bottom: 24px; }
+
+        /* ─── AUTH ─── */
+        #login { 
+            min-height: calc(100vh - 64px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 48px 40px;
+        }
+
+        .auth-header { margin-bottom: 36px; }
+
+        .auth-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+
+        .auth-subtitle {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .auth-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .field-wrap {
+            position: relative;
+        }
+
+        .auth-card input {
+            width: 100%;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 14px 16px;
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.9rem;
+            border-radius: 3px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .auth-card input:focus { border-color: var(--fire); }
+
+        .auth-card input::placeholder { color: #444; }
+
+        .toggle-link {
+            margin-top: 20px;
+            font-size: 0.82rem;
+            color: var(--muted);
+            cursor: pointer;
+            text-align: center;
+            transition: color 0.2s;
+        }
+        .toggle-link:hover { color: var(--fire); }
+
+        /* ─── ORDERS ─── */
+        #user-orders { padding: 48px 5%; }
+
+        .order-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .order-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .order-id {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .order-total {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            color: var(--fire);
+        }
+
+        .order-items { display: flex; flex-direction: column; gap: 8px; }
+
+        .order-item-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        /* ─── ADMIN ─── */
+        #admin { padding: 48px 5%; }
+
+        .admin-panel { max-width: 900px; margin: 0 auto; }
+
+        .admin-panel h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 32px;
+            letter-spacing: 0.05em;
+        }
+
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: var(--surface);
+            padding: 32px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        .admin-form input,
+        .admin-form select {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 12px 16px;
+            font-family: 'Barlow', sans-serif;
+            font-size: 0.9rem;
+            border-radius: 3px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .admin-form input:focus,
+        .admin-form select:focus { border-color: var(--fire); }
+
+        .sale-config { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+
+        .admin-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-item span {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-delete {
+            background: none;
+            border: 1px solid #333;
+            color: var(--muted);
+            font-size: 0.7rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            letter-spacing: 0.1em;
+            padding: 6px 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .btn-delete:hover { border-color: #ff3333; color: #ff3333; }
+
+        /* ─── TOAST ─── */
+        #toast-container {
+            position: fixed;
+            bottom: 96px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 14px 20px;
+            border-radius: 4px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            border-left: 3px solid var(--fire);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            animation: slideIn 0.3s ease, fadeOut 0.4s ease 2.3s forwards;
+            max-width: 280px;
+        }
+
+        /* ─── WHATSAPP FLOAT ─── */
+        .wa-float {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            background: var(--wa);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 24px rgba(37,211,102,0.4);
+            text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+            animation: waPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s both;
+        }
+
+        .wa-float:hover {
+            transform: scale(1.12) rotate(-5deg);
+            box-shadow: 0 8px 32px rgba(37,211,102,0.55);
+        }
+
+        .wa-float svg { width: 30px; height: 30px; }
+
+        .wa-pulse {
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            border: 2px solid rgba(37,211,102,0.5);
+            animation: waPulse 2s ease infinite 2s;
+        }
+
+        .wa-tooltip {
+            position: absolute;
+            right: 72px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 8px 14px;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+
+        .wa-float:hover .wa-tooltip { opacity: 1; }
+
+        /* ─── KEYFRAMES ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+            50%       { opacity: 1;   transform: scaleY(1); }
+        }
+
+        @keyframes waPop {
+            from { opacity: 0; transform: scale(0); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes waPulse {
+            0%   { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to   { opacity: 0; }
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 640px) {
+            .topbar { padding: 0 4%; }
+            .nav-btn { padding: 6px 10px; font-size: 0.78rem; }
+            .logo { font-size: 1.7rem; }
+            .auth-card { padding: 36px 24px; }
+        }
+
+        /* ─── LOADING SKELETON ─── */
+        .skeleton {
+            background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 2px;
+        }
+
+        @keyframes shimmer {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .loading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 2px;
+        }
+
+        .loading-card { aspect-ratio: 3/4; }
+    </style>
 </head>
 <body>
 
+<!-- TOPBAR -->
 <header class="topbar">
-    <h1 id="nav-logo" class="logo">🔥 FEUGO </h1>
+    <div id="nav-logo" class="logo"><span>🔥</span> FEUGO</div>
     <nav id="menu" class="nav-list">
-        <button class="nav-btn" data-view="landing">HOME</button>
-        <button id="nav-shop" class="nav-btn" data-view="shop" style="display:none">SHOP</button>
-        <button id="nav-orders" class="nav-btn" data-view="user-orders" style="display:none">ORDERS</button>
-        <button id="nav-cart" class="nav-btn" data-view="cart-view" style="display:none">BAG</button>
-        <button id="nav-admin" class="nav-btn" data-view="admin" style="display:none">ADMIN</button>
-        <button id="nav-login" class="nav-btn" data-view="login">LOGIN</button>
-        <button id="nav-logout" class="nav-btn" style="display:none">LOGOUT</button>
+        <button class="nav-btn" data-view="landing">Home</button>
+        <button id="nav-shop" class="nav-btn" data-view="shop" style="display:none">Shop</button>
+        <button id="nav-orders" class="nav-btn" data-view="user-orders" style="display:none">Orders</button>
+        <button id="nav-cart" class="nav-btn" data-view="cart-view" style="display:none">
+            Bag <span id="cart-count"></span>
+        </button>
+        <button id="nav-admin" class="nav-btn" data-view="admin" style="display:none">Admin</button>
+        <button id="nav-login" class="nav-btn" data-view="login">Login</button>
+        <button id="nav-logout" class="nav-btn" style="display:none">Logout</button>
     </nav>
 </header>
 
-<main class="container">
-    <section id="landing" class="view">
-        <div class="hero">
-            <h2 class="hero-text">STREETWEAR<br>ON FIRE</h2>
-            <button class="btn-primary" data-view="shop">SHOP COLLECTION</button>
-        </div>
-    </section>
-
-    <section id="shop" class="view" style="display:none">
-        <div id="shopProducts" class="product-grid"></div>
-    </section>
-
-    <section id="user-orders" class="view" style="display:none">
-        <h2 class="section-title">Order History</h2>
-        <div id="userOrdersList" class="order-container"></div>
-    </section>
-
-    <section id="cart-view" class="view" style="display:none">
-        <div class="cart-card">
-            <h2>Your Bag</h2>
-            <div id="cartItems"></div>
-            <div class="banking-details">
-                <p><strong>BANKING DETAILS:</strong></p>
-                <p>Bank: FUEGO CENTRAL</p>
-                <p>Acc: 1029384756</p>
-                <p>Ref: Your Registered Email</p>
+<main>
+    <!-- LANDING -->
+    <section id="landing" class="view active">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <p class="hero-eyebrow">New Collection — Summer 2025</p>
+            <h1 class="hero-title">
+                STREET<br><span class="fire-word">WEAR</span>
+            </h1>
+            <p class="hero-sub">Ignite Your Style</p>
+            <div class="hero-actions">
+                <button class="btn-primary" data-view="shop">Shop Collection</button>
+                <button class="btn-outline" data-view="login">Sign In</button>
             </div>
-            <h3 id="cartTotal">Total: $0</h3>
-            <button class="btn-primary" id="checkoutBtn">WHATSAPP CHECKOUT</button>
+        </div>
+        <div class="scroll-hint">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
-    <section id="admin" class="view" style="display:none">
+    <!-- SHOP -->
+    <section id="shop" class="view">
+        <div style="padding: 48px 5% 0;">
+            <div class="shop-header">
+                <h2 class="section-title">Collection</h2>
+                <span class="product-count" id="product-count">Loading...</span>
+            </div>
+        </div>
+        <div id="shopProducts" class="product-grid" style="padding: 0 5% 80px;"></div>
+    </section>
+
+    <!-- ORDERS -->
+    <section id="user-orders" class="view">
+        <h2 class="section-title" style="margin-bottom:32px;">Order History</h2>
+        <div id="userOrdersList"></div>
+    </section>
+
+    <!-- CART -->
+    <section id="cart-view" class="view">
+        <div class="cart-layout">
+            <div class="cart-items-section">
+                <h2>Your Bag</h2>
+                <div id="cartItems"></div>
+            </div>
+            <div>
+                <div class="cart-summary">
+                    <h2>Summary</h2>
+                    <div class="banking-box">
+                        <h4>💳 Banking Details</h4>
+                        <p><strong>Bank:</strong> FUEGO CENTRAL</p>
+                        <p><strong>Account:</strong> 1029384756</p>
+                        <p><strong>Reference:</strong> Your Registered Email</p>
+                    </div>
+                    <div class="cart-total-row">
+                        <span class="cart-total-label">Total</span>
+                        <span class="cart-total-amount" id="cartTotal">R0</span>
+                    </div>
+                    <button class="btn-primary" id="checkoutBtn" style="width:100%;padding:16px;font-size:1rem;">
+                        📲 WhatsApp Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADMIN -->
+    <section id="admin" class="view">
         <div class="admin-panel">
             <h3>Inventory Control</h3>
             <div class="admin-form">
                 <input id="p-id" type="hidden">
                 <input id="p-name" placeholder="Item Name">
-                <input id="p-price" type="number" placeholder="Price">
+                <input id="p-price" type="number" placeholder="Price (R)">
                 <div class="sale-config">
                     <select id="p-on-sale">
                         <option value="false">Regular Price</option>
-                        <option value="true">Sale Item</option>
+                        <option value="true">On Sale</option>
                     </select>
-                    <input id="p-sale-pct" type="number" placeholder="Sale %">
+                    <input id="p-sale-pct" type="number" placeholder="Discount %">
                 </div>
                 <input type="file" id="p-file" accept="image/*">
-                <button class="btn-primary" id="saveProductBtn">SAVE PRODUCT</button>
+                <button class="btn-primary" id="saveProductBtn">Save Product</button>
             </div>
-            <div id="adminProductList"></div>
+            <div id="adminProductList" class="admin-grid"></div>
         </div>
     </section>
 
-    <section id="login" class="view" style="display:none">
+    <!-- LOGIN -->
+    <section id="login" class="view">
         <div class="auth-card">
-            <h2 id="authTitle">Login</h2>
+            <div class="auth-header">
+                <h2 class="auth-title" id="authTitle">Login</h2>
+                <p class="auth-subtitle">Access your FEUGO account</p>
+            </div>
             <div class="auth-group">
-                <input id="email" type="email" placeholder="Email">
+                <input id="email" type="email" placeholder="Email address">
                 <input id="pass" type="password" placeholder="Password">
             </div>
-            <button class="btn-primary" id="authBtn">SUBMIT</button>
-            <p id="toggleAuth" class="toggle-link">Create Account</p>
+            <button class="btn-primary" id="authBtn" style="width:100%;padding:16px;">Submit</button>
+            <p id="toggleAuth" class="toggle-link">Don't have an account? Create one →</p>
         </div>
     </section>
 </main>
 
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a class="wa-float" href="https://wa.me/27638518362" target="_blank" rel="noopener">
+    <div class="wa-pulse"></div>
+    <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span class="wa-tooltip">Chat with us</span>
+</a>
+
 <script src="app.js" type="module"></script>
 </body>
 </html>
+
