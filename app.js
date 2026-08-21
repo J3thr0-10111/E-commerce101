@@ -25,7 +25,7 @@ const db = getFirestore(app);
 
 const ADMIN_EMAIL = "admin@feugo.com";
 const WHATSAPP_NUMBER = "27638518362";
-const IMAGE_BASE = "./images/products/";
+const IMAGE_BASE = "images/products/";
 
 // Add new filenames here after dropping the image into images/products/
 const PRODUCT_IMAGES = [
