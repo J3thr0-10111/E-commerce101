@@ -63,6 +63,32 @@ function imgSrc(filename) {
   return filename.startsWith("http") ? filename : IMAGE_BASE + filename;
 }
 
+// True only if the image is a full URL, or a filename known to exist in
+// images/products/ (i.e. listed in PRODUCT_IMAGES). Anything else means
+// the file is missing from the repo, so we keep it out of the shop rather
+// than showing a broken image.
+function hasValidImage(filename) {
+  if (!filename) return false;
+  if (filename.startsWith("http")) return true;
+  return PRODUCT_IMAGES.includes(filename);
+}
+
+// Inline SVG shown whenever a product image file can't be found (e.g. the
+// filename stored in Firestore doesn't match a file in images/products/).
+// This keeps the layout intact instead of showing a broken-image icon.
+const FALLBACK_IMG = 'data:image/svg+xml,' + encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#1a1a1a"/>
+  <text x="50%" y="47%" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#666">No Image</text>
+  <text x="50%" y="57%" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#555">Check filename in Admin</text>
+</svg>`);
+
+// Adds an onerror fallback to any <img> tag string so a missing file
+// swaps to FALLBACK_IMG instead of breaking the layout.
+function imgTag(src, alt, extraAttrs = '') {
+  return `<img src="${src}" alt="${alt}" ${extraAttrs} onerror="this.onerror=null;this.src='${FALLBACK_IMG}';">`;
+}
+
 function money(n) { return `R${Math.round(n)}`; }
 
 function showToast(msg) {
@@ -104,6 +130,7 @@ PRODUCT_IMAGES.forEach(f => {
 imgSelect.addEventListener('change', () => {
   const preview = document.getElementById('p-image-preview');
   if (imgSelect.value) {
+    preview.onerror = () => { preview.onerror = null; preview.src = FALLBACK_IMG; };
     preview.src = imgSrc(imgSelect.value);
     preview.style.display = 'block';
   } else {
@@ -212,12 +239,17 @@ window.deleteProduct = async (id) => {
 /* ─── DATA SYNC (Firestore products merge with local seed catalog) ─── */
 onSnapshot(collection(db, "products"), (snap) => {
   firestoreProducts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  products = firestoreProducts.length ? firestoreProducts : SEED_PRODUCTS;
+  const source = firestoreProducts.length ? firestoreProducts : SEED_PRODUCTS;
+  // Shop only shows products whose image file actually exists — products
+  // with a missing/broken image are hidden from customers instead of
+  // showing a broken picture. They still appear in Admin (see
+  // renderAdminList) so staff can fix or delete them.
+  products = source.filter(p => hasValidImage(p.image));
   renderShop();
   renderAdminList();
 }, () => {
   // offline / no Firestore access — still show the catalog
-  products = SEED_PRODUCTS;
+  products = SEED_PRODUCTS.filter(p => hasValidImage(p.image));
   renderShop();
 });
 
@@ -247,7 +279,7 @@ function renderShop() {
     <div class="card">
       ${p.onSale ? `<div class="sale-ribbon">Sale</div>` : ''}
       <div class="card-img-wrap">
-        <img src="${imgSrc(p.image)}" alt="${p.name} — ${p.colorway || ''}" loading="lazy">
+        ${imgTag(imgSrc(p.image), `${p.name} — ${p.colorway || ''}`, 'loading="lazy"')}
         <div class="card-overlay">
           <button class="card-add-btn" onclick="addToCart('${p.id}')">+ Add to Bag</button>
         </div>
@@ -310,7 +342,7 @@ function renderCart() {
     const unit = item.onSale && item.salePct ? Math.round(item.price * (1 - item.salePct / 100)) : item.price;
     return `
     <div class="cart-item">
-      <img src="${imgSrc(item.image)}" alt="${item.name}">
+      ${imgTag(imgSrc(item.image), item.name)}
       <div>
         <p class="cart-item-name">${item.name}</p>
         ${item.colorway ? `<p class="cart-item-colorway">${item.colorway}</p>` : ''}
@@ -387,8 +419,8 @@ function renderAdminList() {
   }
   list.innerHTML = firestoreProducts.map(p => `
     <div class="admin-item">
-      <img src="${imgSrc(p.image)}" alt="">
-      <span class="admin-item-name">${p.name}${p.colorway ? ' — ' + p.colorway : ''}</span>
+      ${imgTag(imgSrc(p.image), '')}
+      <span class="admin-item-name">${p.name}${p.colorway ? ' — ' + p.colorway : ''}${!hasValidImage(p.image) ? ' <span style="color:#e03131;font-weight:600;">(hidden — missing image)</span>' : ''}</span>
       <span class="admin-item-price">${money(p.price)}</span>
       <span class="badge-sale">${p.onSale ? p.salePct + '% off' : '—'}</span>
       <span style="display:flex;gap:6px;">
