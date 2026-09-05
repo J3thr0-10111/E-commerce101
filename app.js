@@ -14,18 +14,18 @@ const IMAGE_BASE = "images/products/";
 // To add a product: drop the photo into images/products/, then add an
 // entry here with the exact filename. To remove a product, delete its entry.
 const PRODUCTS = [
-  { id: "1", name: "Feugo West Asia- CHI",   colorway: "Orange",  price: 370, image: "IMG-20260904-WA001.jpg",       onSale: false, salePct: 0  },
+  { id: "1", name: "Feugo West Asia- CHI",   colorway: "Orange",  price: 370, image: "IMG-20260902-WA0001.jpg",       onSale: false, salePct: 0  },
   { id: "2", name: "Block Hoodie White",      colorway: "White",  price: 670, image: "IMG-20260904-WA0018.jpg",      onSale: true,  salePct: 5 },
-  { id: "3", name: "Feugo Regular Red",      colorway: "Red",  price: 320, image: "IMG-20260904-WA006.jpg",      onSale: false, salePct: 0  },
+  { id: "3", name: "Feugo Regular Red",      colorway: "Red",  price: 320, image: "IMG-20260902-WA0006.jpg",      onSale: false, salePct: 0  },
   { id: "4", name: "Never Average Tee",   colorway: "Orange", price: 370, image: "never-average-orange.jpg",  onSale: false, salePct: 0  },
   { id: "5", name: "Never Average Tee",   colorway: "Mint",   price: 370, image: "never-average-mint.jpg",    onSale: false, salePct: 0  },
   { id: "6", name: "Feugo 25 Jersey Tee", colorway: "Black",  price: 350, image: "feugo25-black.jpg",         onSale: true,  salePct: 15 },
   { id: "7", name: "Puffs & Kisses Tee",  colorway: "Black",  price: 320, image: "puffs-kisses-black.jpg",    onSale: false, salePct: 0  },
   { id: "8", name: "Puffs & Kisses Tee",  colorway: "White",  price: 370, image: "puffs-kisses-white.jpg",    onSale: false, salePct: 0  },
-  { id: "9", name: "Never Average Tee",   colorway: "Mint",   price: 360, image: "IMG-20260902-WA00010.jpg",    onSale: false, salePct: 0  },
+  { id: "9", name: "Never Average Tee",   colorway: "Mint",   price: 360, image: "IMG-20260902-WA0021.jpg",    onSale: false, salePct: 0  },
   { id: "10", name: "Feugo 25 Tee", colorway: "Black",  price: 370, image: "IMG-20260902-WA0004.jpg",         onSale: true,  salePct: 15 },
-  { id: "11", name: "Puffs & Kisses Tee",  colorway: "Black",  price: 350, image: "IMG-20260902-WA00070.jpg",    onSale: false, salePct: 0  },
-  { id: "12", name: "Puffs & Kisses Tee",  colorway: "White",  price: 320, image: "IMG-20260902-WA00013.jpg",    onSale: false, salePct: 0  },
+  { id: "11", name: "Puffs & Kisses Tee",  colorway: "Black",  price: 350, image: "IMG-20260902-WA0033.jpg",    onSale: false, salePct: 0  },
+  { id: "12", name: "Puffs & Kisses Tee",  colorway: "White",  price: 320, image: "IMG-20260902-WA0043.jpg",    onSale: false, salePct: 0  },
 
 ];
 
