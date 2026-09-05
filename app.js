@@ -22,10 +22,10 @@ const PRODUCTS = [
   { id: "6", name: "Feugo 25 Jersey Tee", colorway: "Black",  price: 350, image: "feugo25-black.jpg",         onSale: true,  salePct: 15 },
   { id: "7", name: "Puffs & Kisses Tee",  colorway: "Black",  price: 320, image: "puffs-kisses-black.jpg",    onSale: false, salePct: 0  },
   { id: "8", name: "Puffs & Kisses Tee",  colorway: "White",  price: 370, image: "puffs-kisses-white.jpg",    onSale: false, salePct: 0  },
-  { id: "9", name: "Never Average Tee",   colorway: "Mint",   price: 360, image: "IMG-20260902-WA0001.jpg",    onSale: false, salePct: 0  },
-  { id: "10", name: "Feugo 25 Jersey Tee", colorway: "Black",  price: 370, image: "IMG-20260902-WA0004.jpg",         onSale: true,  salePct: 15 },
-  { id: "11", name: "Puffs & Kisses Tee",  colorway: "Black",  price: 350, image: "IMG-20260902-WA00085.jpg",    onSale: false, salePct: 0  },
-  { id: "12", name: "Puffs & Kisses Tee",  colorway: "White",  price: 320, image: "IMG-20260902-WA0002.jpg",    onSale: false, salePct: 0  },
+  { id: "9", name: "Never Average Tee",   colorway: "Mint",   price: 360, image: "IMG-20260902-WA00010.jpg",    onSale: false, salePct: 0  },
+  { id: "10", name: "Feugo 25 Tee", colorway: "Black",  price: 370, image: "IMG-20260902-WA0004.jpg",         onSale: true,  salePct: 15 },
+  { id: "11", name: "Puffs & Kisses Tee",  colorway: "Black",  price: 350, image: "IMG-20260902-WA00070.jpg",    onSale: false, salePct: 0  },
+  { id: "12", name: "Puffs & Kisses Tee",  colorway: "White",  price: 320, image: "IMG-20260902-WA00013.jpg",    onSale: false, salePct: 0  },
 
 ];
 
